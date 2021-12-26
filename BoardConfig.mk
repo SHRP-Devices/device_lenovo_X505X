@@ -41,35 +41,27 @@ TARGET_BOOTLOADER_BOARD_NAME := msm8937
 TARGET_NO_BOOTLOADER := true
 
 # Kernel
+BOARD_KERNEL_IMAGE_NAME := zImage
 TARGET_PREBUILT_KERNEL := device/lenovo/X505X/prebuilt/zImage
 
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_OFFSET := 0x00008000
 BOARD_KERNEL_TAGS_OFFSET := 0x0000100
 BOARD_RAMDISK_OFFSET := 0x01000000
-BOARD_SECOND_OFFSET := 0x00f00000
 
-BOARD_HASH_TYPE := sha1
-BOARD_OS_VERSION := 9.0.0
-BOARD_OS_PATCH_LEVEL := 2020-07
-BOARD_HEADER_VERSION := 1
-BOARD_HEADER_SIZE := 1648
-
-BOARD_KERNEL_CMDLINE := androidboot.console=ttyMSM0
-BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
-BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
-BOARD_KERNEL_CMDLINE += ehci-hcd.park=3
-BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
-BOARD_KERNEL_CMDLINE += androidboot.bootdevice=7824900.sdhci
-BOARD_KERNEL_CMDLINE += earlycon=msm_serial_dm,0x78B0000
-BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image
-BOARD_KERNEL_CMDLINE += androidboot.usbconfigfs=true
-BOARD_KERNEL_CMDLINE += loop.max_part=7
+BOARD_KERNEL_CMDLINE := androidboot.console=ttyMSM0 
+BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom 
+BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237 
+BOARD_KERNEL_CMDLINE += ehci-hcd.park=3 
+BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 
+BOARD_KERNEL_CMDLINE += androidboot.bootdevice=7824900.sdhci 
+BOARD_KERNEL_CMDLINE += earlycon=msm_serial_dm,0x78B0000 
+BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image 
+BOARD_KERNEL_CMDLINE += androidboot.usbconfigfs=true 
+BOARD_KERNEL_CMDLINE += loop.max_part=7 
 BOARD_KERNEL_CMDLINE += print.devkmsg=on
 BOARD_KERNEL_CMDLINE += buildvariant=user
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-
 
 # kernel - touchscreen for recovery
 BOARD_KERNEL_CMDLINE += androidboot.goodixtp=gtp
@@ -84,30 +76,31 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x100000000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x57E379E00
-BOARD_CACHEIMAGE_PARTITION_SIZE := 0x10000000
-BOARD_PERSISTIMAGE_PARTITION_SIZE := 0x02000000
-BOARD_OEMIMAGE_PARTITION_SIZE := 0x10000000
 
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
-
-#treble
+# treble
 TARGET_COPY_OUT_VENDOR := vendor
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext2
-BOARD_VENDORIMAGE_PARTITION_SIZE := 0x60000000
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
-#file system
+# file system
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_ROOT_EXTRA_SYMLINKS := /vendor/firmware_mnt:/firmware
 
+# decryption
+TW_INCLUDE_CRYPTO := true
+BOARD_USES_QCOM_FBE_DECRYPTION := true
 
-#decryption
-TW_INCLUDE_CRYPTO := false
-TW_INCLUDE_CRYPTO_FBE := false
-PLATFORM_SECURITY_PATCH := 2025-12-31
+PLATFORM_VERSION := 127
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := 2099-12-31
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+
+# display
+TW_THEME := landscape_hdpi
+TW_ROTATION := 90
+RECOVERY_TOUCHSCREEN_SWAP_XY := true
+RECOVERY_TOUCHSCREEN_FLIP_Y := true
 
 # TWRP specific build flags
 BOARD_USES_QCOM_HARDWARE := true
@@ -119,32 +112,7 @@ TW_EXCLUDE_SUPERSU := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 TW_HAS_EDL_MODE := true
 TW_INCLUDE_NTFS_3G := true
-
-# disable mouse cursor
 TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_OVERRIDE_SYSTEM_PROPS := \ "ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.device=ro.product.system.device;ro.product.model=ro.product.system.model;ro.product.name=ro.product.system.name"
 
-# orientation
-TW_THEME := portrait_hdpi
 
-#LUN file - error on TWRP for Pie
-#TARGET_USE_CUSTOM_LUN_FILE_PATH := "/config/usb_gadget/g1/functions/mass_storage.0/lun.0"
-TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-TW_DEFAULT_BRIGHTNESS := 200
-
-#SHRP_Variables
-SHRP_PATH := device/lenovo/X505X
-SHRP_MAINTAINER := flashokiller
-SHRP_DEVICE_CODE := X505X
-SHRP_EDL_MODE := 1
-SHRP_EXTERNAL := /external_sd
-SHRP_INTERNAL := /sdcard
-SHRP_OTG := /usbotg
-SHRP_REC := /dev/block/bootdevice/by-name/recovery
-SHRP_REC_TYPE := Treble
-SHRP_DEVICE_TYPE := A-Only
-SHRP_FLASH := 1
-#SHRP_FONP_1 := /sys/class/leds/led:torch_0/brightness
-#SHRP_FONP_2 := /sys/class/leds/led:torch_1/brightness
-#SHRP_FONP_3 := /sys/class/leds/led:switch/brightness
-#SHRP_FLASH_MAX_BRIGHTNESS := 200
-SHRP_OFFICIAL := true

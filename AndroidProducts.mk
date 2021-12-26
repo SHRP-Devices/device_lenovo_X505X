@@ -16,3 +16,9 @@
 
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/omni_X505X.mk
+
+COMMON_LUNCH_CHOICES := \
+    omni_X505X-userdebug \
+    omni_X505X-user \
+    omni_X505X-eng
+
